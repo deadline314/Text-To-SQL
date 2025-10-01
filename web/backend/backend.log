@@ -1,0 +1,93 @@
+INFO:     Started server process [38238]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+INFO:     127.0.0.1:57443 - "GET /api/schema HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57444 - "GET /api/examples HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57443 - "GET /api/schema HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57450 - "GET /api/examples HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57482 - "OPTIONS /api/auto-execute HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57482 - "POST /api/auto-execute HTTP/1.1" 200 OK
+/Users/lixuqing/Github/Text-To-SQL/web/backend/main.py:289: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  max_retries = request.dict().get("max_retries", 2)
+✓ Bedrock 模型已初始化: us.anthropic.claude-sonnet-4-20250514-v1:0
+  區域: us-east-1
+[DEBUG] Executing SQL: SELECT *
+FROM tencent_bill
+WHERE bill_month = '2025-01'
+UNION ALL
+SELECT id,
+       tencent_global_account_id AS tencent_id,
+       NULL AS client_profile_id,
+       'GLOBAL' AS tencent_type,
+       voucher_pay_amount AS coupon,
+       NULL AS balance,
+       cost,
+       cost_at_list,
+       bill_month,
+       currency,
+       created_date,
+       note
+FROM global_bill
+WHERE bill_month = '2025-01';
+[DEBUG] Query returned 835 rows
+[DEBUG] Sending success event: attempt=1, rows=835
+INFO:     127.0.0.1:57545 - "POST /api/auto-execute HTTP/1.1" 200 OK
+/Users/lixuqing/Github/Text-To-SQL/web/backend/main.py:289: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  max_retries = request.dict().get("max_retries", 2)
+Some parameters are on the meta device because they were offloaded to the disk.
+Device set to use mps
+[DEBUG] Executing SQL: SELECT *
+FROM tencent_bill
+WHERE bill_month = '2025-01';
+[DEBUG] Query returned 240 rows
+[DEBUG] Sending success event: attempt=1, rows=240
+INFO:     127.0.0.1:57846 - "POST /api/auto-execute HTTP/1.1" 200 OK
+/Users/lixuqing/Github/Text-To-SQL/web/backend/main.py:289: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.11/migration/
+  max_retries = request.dict().get("max_retries", 2)
+Some parameters are on the meta device because they were offloaded to the disk.
+Device set to use mps
+[DEBUG] Executing SQL: SELECT t1.client_profile_id,
+       SUM(t1.cost) AS total_cost,
+       SUM(t1.balance) AS total_balance
+FROM tencent_bill t1
+GROUP BY t1.client_profile_id;
+[DEBUG] Query returned 219 rows
+[DEBUG] Sending success event: attempt=1, rows=219
+INFO:     127.0.0.1:58540 - "POST /api/auto-execute HTTP/1.1" 200 OK
+✓ Bedrock 模型已初始化: us.anthropic.claude-sonnet-4-20250514-v1:0
+  區域: us-east-1
+[DEBUG] Executing SQL: SELECT client_profile_id,
+       bill_month,
+       SUM(cost) AS total_cost,
+       SUM(coupon) AS total_coupon
+FROM tencent_bill
+WHERE bill_month BETWEEN '2024-01' AND '2024-12'
+  AND tencent_type = 'GLOBAL'
+GROUP BY client_profile_id,
+         bill_month
+HAVING SUM(cost) > 5000
+ORDER BY total_cost DESC
+LIMIT 10;
+[DEBUG] Query returned 10 rows
+[DEBUG] Sending success event: attempt=1, rows=10
+INFO:     127.0.0.1:58717 - "POST /api/auto-execute HTTP/1.1" 200 OK
+✓ Bedrock 模型已初始化: us.anthropic.claude-sonnet-4-20250514-v1:0
+  區域: us-east-1
+[DEBUG] Executing SQL: SELECT client_profile_id,
+       bill_month,
+       SUM(cost) AS total_cost,
+       SUM(coupon) AS total_coupon
+FROM tencent_bill
+WHERE bill_month BETWEEN '2024-01' AND '2024-12'
+  AND tencent_type = 'GLOBAL'
+GROUP BY client_profile_id,
+         bill_month
+HAVING SUM(cost) > 5000
+ORDER BY total_cost DESC
+LIMIT 10;
+[DEBUG] Query returned 10 rows
+[DEBUG] Sending success event: attempt=1, rows=10
+INFO:     127.0.0.1:60559 - "POST /api/auto-execute HTTP/1.1" 200 OK
+Some parameters are on the meta device because they were offloaded to the disk.
+Device set to use mps

@@ -1,0 +1,21 @@
+[project]
+name = "text-to-sql"
+version = "0.1.0"
+description = "A modular Text-to-SQL conversion system"
+requires-python = ">=3.10"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "B", "C4", "UP"]
+ignore = ["E402"]  # Allow imports not at top of file (for sys.path modifications)
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+pythonpath = ["."]
+addopts = "-v --cov=src --cov-report=term-missing"
+

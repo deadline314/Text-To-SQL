@@ -1,0 +1,13 @@
+# Provider-specific dependencies for v1.3.0+
+# Install only the providers you need
+
+# AWS Bedrock Provider (Claude Sonnet 4/4.5)
+boto3>=1.34.0
+botocore>=1.34.0
+
+# Google GenAI Provider (Gemini 2.0+) - New SDK
+google-genai>=0.2.0
+
+# Retry mechanism (optional but recommended)
+tenacity>=8.2.0
+
